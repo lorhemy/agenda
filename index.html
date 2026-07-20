@@ -1,0 +1,4562 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Minha Agenda</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Great+Vibes&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root {
+    --vinho: #701c3a;
+    --rosa: #a83d62;
+    --rosa-claro: #f8dce5;
+    --rosa-suave: #fff7f9;
+    --texto: #4a2633;
+    --branco: #ffffff;
+    --sombra: 0 10px 30px rgba(100, 30, 60, .13);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    color: var(--texto);
+    background: linear-gradient(135deg, #fff8fa, #fbe8ee);
+}
+
+header {
+    background: linear-gradient(135deg, #701c3a, #a83d62);
+    color: white;
+    text-align: center;
+    padding: 48px 20px;
+    box-shadow: var(--sombra);
+}
+
+header h1 {
+    margin: 0;
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(3.5rem, 9vw, 6rem);
+    font-weight: normal;
+}
+
+header p {
+    margin: 5px 0 0;
+    opacity: .9;
+}
+
+.container {
+    max-width: 1150px;
+    margin: auto;
+    padding: 30px 18px 70px;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    transition: .2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+}
+
+.btn-principal {
+    background: var(--vinho);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 25px;
+}
+
+.btn-secundario {
+    background: var(--rosa-claro);
+    color: var(--vinho);
+    padding: 12px 20px;
+    border-radius: 25px;
+}
+
+.btn-cinza {
+    background: #eeeeee;
+    color: #555;
+    padding: 12px 20px;
+    border-radius: 25px;
+}
+
+.btn-perigo {
+    background: #f5d4dc;
+    color: #8c2347;
+    padding: 8px 13px;
+    border-radius: 20px;
+}
+
+.titulo-pagina {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.titulo-pagina h2 {
+    color: var(--vinho);
+    font-family: 'Cinzel', serif;
+}
+
+.acoes-iniciais {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+#lista-pastas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 20px;
+}
+
+.pasta-card {
+    background: white;
+    padding: 25px;
+    border-radius: 22px;
+    box-shadow: var(--sombra);
+    border-top: 6px solid var(--rosa);
+    transition: .25s;
+}
+
+.pasta-card:hover {
+    transform: translateY(-6px);
+}
+
+.pasta-icone {
+    font-size: 3rem;
+    cursor: pointer;
+}
+
+.pasta-card h3 {
+    color: var(--vinho);
+    font-family: 'Cinzel', serif;
+    cursor: pointer;
+}
+
+.pasta-card p {
+    color: #805466;
+    font-size: .9rem;
+    cursor: pointer;
+}
+
+.pasta-acoes {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+}
+
+.pasta-acoes button {
+    font-size: .75rem;
+}
+
+#pagina-pasta {
+    display: none;
+}
+
+.topo-pasta {
+    background: white;
+    border-radius: 22px;
+    padding: 22px;
+    box-shadow: var(--sombra);
+    margin-bottom: 25px;
+}
+
+.topo-pasta-superior {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+#nome-pasta {
+    font-family: 'Cinzel', serif;
+    color: var(--vinho);
+    margin: 0;
+}
+
+.barra-container {
+    width: 100%;
+    height: 13px;
+    background: #f1d4de;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 15px;
+}
+
+#barra-progresso {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #8e2348, #d86d91);
+    transition: .4s;
+}
+
+#texto-progresso {
+    display: block;
+    margin-top: 8px;
+    color: #805466;
+    font-size: .9rem;
+}
+
+#lista-topicos {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.topico {
+    background: white;
+    border-radius: 22px;
+    padding: 25px;
+    box-shadow: var(--sombra);
+    border-left: 6px solid var(--rosa);
+}
+
+.topico-cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+}
+
+.topico-titulo {
+    font-family: 'Cinzel', serif;
+    color: var(--vinho);
+    font-size: 1.25rem;
+    margin: 0 0 8px;
+}
+
+.topico-tipo {
+    color: #9b536c;
+    font-size: .8rem;
+}
+
+.topico-acoes {
+    display: flex;
+    gap: 7px;
+    flex-wrap: wrap;
+}
+
+.topico-acoes button {
+    font-size: .75rem;
+}
+
+.lista-itens {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 15px;
+    background: var(--rosa-suave);
+    border-radius: 14px;
+    transition: .2s;
+}
+
+.item:hover {
+    background: #fff0f4;
+}
+
+.marcador {
+    min-width: 32px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    cursor: pointer;
+    color: var(--rosa);
+    user-select: none;
+}
+
+.marcador:hover {
+    transform: scale(1.15);
+}
+
+.texto-item {
+    flex: 1;
+    outline: none;
+    line-height: 1.5;
+    min-width: 100px;
+}
+
+.item.concluido .texto-item {
+    text-decoration: line-through;
+    opacity: .55;
+}
+
+.item.concluido .marcador {
+    opacity: .55;
+}
+
+.campo-extra {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 150px;
+    max-width: 260px;
+}
+
+.nome-campo {
+    color: #9b536c;
+    font-size: .75rem;
+    white-space: nowrap;
+}
+
+.valor-campo {
+    width: 100%;
+    min-width: 90px;
+    border: 1px solid #e2b9c6;
+    border-radius: 9px;
+    padding: 7px 9px;
+    font-family: 'Poppins', sans-serif;
+    background: white;
+    color: var(--texto);
+}
+
+.botao-excluir-item {
+    display: none;
+    background: #f5d4dc;
+    color: #8c2347;
+    border-radius: 15px;
+    padding: 5px 9px;
+    font-size: .7rem;
+}
+
+body.modo-edicao .botao-excluir-item {
+    display: block;
+}
+
+body.modo-edicao .texto-item,
+body.modo-edicao .topico-titulo,
+body.modo-edicao #nome-pasta {
+    border-bottom: 2px dashed #d36c8e;
+    padding: 3px;
+    background: #fffafb;
+}
+
+.adicionar-item {
+    margin-top: 15px;
+    border: 2px dashed #d99aae;
+    padding: 12px;
+    border-radius: 12px;
+    text-align: center;
+    color: #9b536c;
+    cursor: pointer;
+}
+
+.adicionar-item:hover {
+    background: #fff5f8;
+}
+
+.modal-fundo {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(60, 15, 35, .55);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 10;
+}
+
+.modal {
+    background: white;
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 25px;
+    padding: 28px;
+    box-shadow: var(--sombra);
+}
+
+.modal h2 {
+    color: var(--vinho);
+    font-family: 'Cinzel', serif;
+    margin-top: 0;
+}
+
+.modal label {
+    display: block;
+    margin-top: 10px;
+    font-weight: 600;
+    color: var(--vinho);
+}
+
+.modal input,
+.modal select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #e2b9c6;
+    border-radius: 12px;
+    margin: 7px 0 12px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.checkbox-extra {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 12px 0;
+}
+
+.checkbox-extra input {
+    width: auto;
+    margin: 0;
+}
+
+.checkbox-extra label {
+    margin: 0;
+}
+
+#config-campo-extra {
+    display: none;
+}
+
+.modal-acoes {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.rodape {
+    text-align: center;
+    margin-top: 45px;
+    color: #8c5367;
+    font-size: .9rem;
+}
+
+@media (max-width: 700px) {
+
+    .item {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .texto-item {
+        min-width: 70%;
+    }
+
+    .campo-extra {
+        width: 100%;
+        max-width: none;
+        padding-left: 44px;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+    <h1>Minha Agenda</h1>
+    <p>Organizando ideias, projetos e tudo o que ainda está por vir ♡</p>
+</header>
+
+<main class="container">
+
+<section id="pagina-inicial">
+
+```
+<div class="titulo-pagina">
+    <h2>📁 Meus projetos</h2>
+    <p>Escolha uma pasta para continuar sua organização.</p>
+</div>
+
+<div class="acoes-iniciais">
+    <button class="btn-principal" onclick="abrirModalPasta()">
+        ＋ Adicionar pasta
+    </button>
+</div>
+
+<div id="lista-pastas"></div>
+```
+
+</section>
+
+<section id="pagina-pasta">
+
+```
+<div class="topo-pasta">
+
+    <div class="topo-pasta-superior">
+
+        <button class="btn-secundario" onclick="voltarInicio()">
+            ← Voltar
+        </button>
+
+        <h2 id="nome-pasta"></h2>
+
+        <div>
+
+            <button
+                class="btn-principal"
+                onclick="alternarEdicao()"
+                id="botao-editar">
+
+                ✏️ Editar
+
+            </button>
+
+            <button
+                class="btn-secundario"
+                onclick="abrirModalTopico()">
+
+                ＋ Tópico
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="barra-container">
+        <div id="barra-progresso"></div>
+    </div>
+
+    <span id="texto-progresso">
+        0% concluído
+    </span>
+
+</div>
+
+<div id="lista-topicos"></div>
+
+<div class="rodape">
+    ♡ Sua agenda, do seu jeito ♡
+</div>
+```
+
+</section>
+
+</main>
+
+<!-- MODAL DE PASTA -->
+
+<div class="modal-fundo" id="modal-pasta">
+
+```
+<div class="modal">
+
+    <h2>📁 Nova pasta</h2>
+
+    <label>Nome da pasta:</label>
+
+    <input
+        type="text"
+        id="input-nome-pasta"
+        placeholder="Ex: Projeto 1">
+
+    <div class="modal-acoes">
+
+        <button
+            class="btn-cinza"
+            onclick="fecharModais()">
+
+            Cancelar
+
+        </button>
+
+        <button
+            class="btn-principal"
+            onclick="criarPasta()">
+
+            Criar pasta
+
+        </button>
+
+    </div>
+
+</div>
+```
+
+</div>
+
+<!-- MODAL DE TÓPICO -->
+
+<div class="modal-fundo" id="modal-topico">
+
+```
+<div class="modal">
+
+    <h2>📝 Novo tópico</h2>
+
+    <label>Nome do tópico:</label>
+
+    <input
+        type="text"
+        id="input-nome-topico"
+        placeholder="Ex: Tarefas importantes">
+
+    <label>Tipo do tópico:</label>
+
+    <select id="input-tipo-topico">
+
+        <option value="checklist">
+            ☑️ Lista com marcação
+        </option>
+
+        <option value="lista">
+            📝 Lista simples
+        </option>
+
+    </select>
+
+    <div class="modal-acoes">
+
+        <button
+            class="btn-cinza"
+            onclick="fecharModais()">
+
+            Cancelar
+
+        </button>
+
+        <button
+            class="btn-principal"
+            onclick="criarTopico()">
+
+            Criar tópico
+
+        </button>
+
+    </div>
+
+</div>
+```
+
+</div>
+
+<!-- MODAL DE ITEM -->
+
+<div class="modal-fundo" id="modal-item">
+
+```
+<div class="modal">
+
+    <h2>➕ Nova linha</h2>
+
+    <label>Texto da linha:</label>
+
+    <input
+        type="text"
+        id="input-texto-item"
+        placeholder="Ex: Comprar flores">
+
+    <label>Modelo de marcação:</label>
+
+    <select id="input-marcador">
+
+        <option value="checkbox">
+            ☐ Caixa de seleção
+        </option>
+
+        <option value="bolinha">
+            ○ Bolinha
+        </option>
+
+        <option value="coracao">
+            ♡ Coração
+        </option>
+
+        <option value="estrela">
+            ☆ Estrela
+        </option>
+
+        <option value="flor">
+            🌸 Flor
+        </option>
+
+        <option value="numero">
+            🔢 Número
+        </option>
+
+        <option value="nenhum">
+            📝 Sem marcação
+        </option>
+
+    </select>
+
+    <div class="checkbox-extra">
+
+        <input
+            type="checkbox"
+            id="input-tem-campo">
+
+        <label for="input-tem-campo">
+            Adicionar campo extra
+        </label>
+
+    </div>
+
+    <div id="config-campo-extra">
+
+        <label>
+            Nome do campo:
+        </label>
+
+        <input
+            type="text"
+            id="input-nome-campo"
+            placeholder="Ex: Preço, Data, Quantidade">
+
+        <label>
+            Valor inicial:
+        </label>
+
+        <input
+            type="text"
+            id="input-valor-campo"
+            placeholder="Ex: R$ 30,00">
+
+    </div>
+
+    <div class="modal-acoes">
+
+        <button
+            class="btn-cinza"
+            onclick="fecharModais()">
+
+            Cancelar
+
+        </button>
+
+        <button
+            class="btn-principal"
+            onclick="criarNovoItem()">
+
+            Adicionar linha
+
+        </button>
+
+    </div>
+
+</div>
+```
+
+</div>
+
+<script>
+
+const agendaInicial = [
+
+    {
+        id: gerarId(),
+        nome: "Projeto 2 — O Caderno",
+        icone: "📖",
+        topicos: [
+
+            {
+                id: gerarId(),
+                nome: "Capa",
+                tipo: "checklist",
+                itens: [
+                    "20 capítulos da mulher que mudou minha vida",
+                    "Tudo o que eu nunca quero que você esqueça",
+                    "Um pedacinho do nosso infinito",
+                    "A história mais bonita que eu conheço"
+                ].map(criarItem)
+            },
+
+            {
+                id: gerarId(),
+                nome: "1. Página de dedicatória",
+                tipo: "checklist",
+                itens: [
+                    "Contar por que decidi fazer aquele caderno"
+                ].map(criarItem)
+            },
+
+            {
+                id: gerarId(),
+                nome: "2. Linha do tempo",
+                tipo: "checklist",
+                itens: [
+                    "Como vocês se conheceram",
+                    "Primeira conversa",
+                    "Primeiro encontro",
+                    "Primeiro beijo",
+                    "Primeiro eu te amo",
+                    "Primeira viagem",
+                    "Momentos engraçados",
+                    "Adicionar fotos"
+                ].map(criarItem)
+            },
+
+            {
+                id: gerarId(),
+                nome: "3. 20 coisas que eu amo em você",
+                tipo: "checklist",
+                itens: [
+                    "Seu jeito de cuidar",
+                    "Sua risada",
+                    "Sua determinação",
+                    "Sua inteligência",
+                    "Sua coragem",
+                    "Seu abraço",
+                    "Sua paciência"
+                ].map(criarItem)
+            },
+
+            {
+                id: gerarId(),
+                nome: "4. Playlist da nossa história",
+                tipo: "checklist",
+                itens: [
+                    "Escolher as músicas",
+                    "Escrever por que cada música lembra vocês",
+                    "Escrever onde ouviram",
+                    "Adicionar a frase favorita",
+                    "Adicionar QR Codes do Spotify"
+                ].map(criarItem)
+            },
+
+            {
+                id: gerarId(),
+                nome: "5. Nosso álbum",
+                tipo: "checklist",
+                itens: [
+                    "Escolher as fotos",
+                    "Escrever a história por trás de cada foto"
+                ].map(criarItem)
+            },
+
+            {
+                id: gerarId(),
+                nome: "6. Você provavelmente não percebe...",
+                tipo: "checklist",
+                itens: [
+                    "Escrever pequenas coisas que ela faz e talvez nem perceba",
+                    "Você sempre ajeita o cabelo quando está nervosa",
+                    "Você sorri diferente quando está realmente feliz",
+                    "Você aperta minha mão quando está confortável"
+                ].map(criarItem)
+            },
+
+            {
+                id: gerarId(),
+                nome: "7. Nossos lugares",
+                tipo: "checklist",
+                itens: [
+                    "Criar um mapa com lugares importantes",
+                    "Marcar os lugares importantes",
+                    "Escrever a história de cada lugar"
+                ].map(criarItem)
+            },
+
+            {
+                id: gerarId(),
+                nome: "8. Página das primeiras vezes",
+                tipo: "checklist",
+                itens: [
+                    "Primeiro abraço",
+                    "Primeiro presente",
+                    "Primeira foto",
+                    "Primeira viagem",
+                    "Primeiro cinema",
+                    "Primeira chamada de vídeo",
+                    "Primeiro aniversário juntas"
+                ].map(criarItem)
+            },
+
+            {
+                id: gerarId(),
+                nome: "9. Frases que são a cara dela",
+                tipo: "checklist",
+                itens: [
+                    "Anotar frases que ela fala sempre"
+                ].map(criarItem)
+            },
+
+            {
+                id: gerarId(),
+                nome: "10. Se eu pudesse congelar alguns momentos...",
+                tipo: "checklist",
+                itens: [
+                    "Escolher 10 momentos especiais",
+                    "Explicar por que gostaria de revivê-los"
+                ].map(criarItem)
+            },
+
+            {
+                id: gerarId(),
+                nome: "11. Curiosidades sobre nós",
+                tipo: "checklist",
+                itens: [
+                    "Quantas fotos temos",
+                    "Quantos dias juntas",
+                    "Quem pediu namoro",
+                    "Quem dorme primeiro",
+                    "Quem manda mais mensagens",
+                    "Música mais ouvida",
+                    "Filme favorito"
+                ].map(criarItem)
+            },
+
+            {
+                id: gerarId(),
+                nome: "12. Página de sonhos",
+                tipo: "checklist",
+                itens: [
+                    "Lugares para conhecer",
+                    "Coisas para fazer",
+                    "Metas do casal"
+                ].map(criarItem)
+            },
+
+            {
+                id: gerarId(),
+                nome: "13. Bucket List do casal",
+                tipo: "checklist",
+                itens: [
+                    "Acampar",
+                    "Ver neve",
+                    "Fazer piquenique",
+                    "Cozinhar juntas",
+                    "Aprender dança",
+                    "Viajar de trem",
+                    "Adicionar mais itens à Bucket List"
+                ].map(criarItem)
+            },
+
+            {
+                id: gerarId(),
+                nome: "14. Vale-presentes",
+                tipo: "checklist",
+                itens: [
+                    "Vale um café",
+                    "Vale um jantar",
+                    "Vale escolher o filme",
+                    "Vale um abraço de cinco minutos",
+                    "Vale um passeio surpresa"
+                ].map(criarItem)
+            },
+
+            {
+                id: gerarId(),
+                nome: "15. Quiz sobre nós",
+                tipo: "checklist",
+                itens: [
+                    "Quem dorme primeiro?",
+                    "Quem demora mais para responder?",
+                    "Quem canta pior?",
+                    "Quem chora em filme?",
+                    "Escrever as respostas na página seguinte"
+                ].map(criarItem)
+            },
+
+            {
+                id: gerarId(),
+                nome: "16. Página E se...",
+                tipo: "checklist",
+                itens: [
+                    "Se pudéssemos morar em qualquer país?",
+                    "Se ganhássemos na loteria?",
+                    "Se tivéssemos um café?"
+                ].map(criarItem)
+            },
+
+            {
+                id: gerarId(),
+                nome: "17. Mensagens de pessoas importantes",
+                tipo: "checklist",
+                itens: [
+                    "Pedir pequenos textos para amigos ou familiares",
+                    "Organizar as mensagens no caderno"
+                ].map(criarItem)
+            },
+
+            {
+                id: gerarId(),
+                nome: "18. Cápsula do tempo",
+                tipo: "checklist",
+                itens: [
+                    "Escrever como imaginamos nossa vida daqui a 1 ano",
+                    "Escrever como imaginamos nossa vida daqui a 5 anos",
+                    "Escrever como imaginamos nossa vida daqui a 10 anos"
+                ].map(criarItem)
+            },
+
+            {
+                id: gerarId(),
+                nome: "19. Espaço em branco",
+                tipo: "checklist",
+                itens: [
+                    "Deixar páginas para continuar escrevendo nos próximos aniversários"
+                ].map(criarItem)
+            },
+
+            {
+                id: gerarId(),
+                nome: "20. Última página",
+                tipo: "checklist",
+                itens: [
+                    "Escrever uma carta final",
+                    "Esse caderno nunca ficará completo, porque nossa história continua sendo escrita todos os dias."
+                ].map(criarItem)
+            }
+
+        ]
+    }
+
+];
+
+let pastas = carregarDados();
+let pastaAtual = null;
+let modoEdicao = false;
+let topicoSelecionado = null;
+
+const marcadores = {
+
+    checkbox: {
+        normal: "☐",
+        concluido: "☑"
+    },
+
+    bolinha: {
+        normal: "○",
+        concluido: "●"
+    },
+
+    coracao: {
+        normal: "♡",
+        concluido: "♥"
+    },
+
+    estrela: {
+        normal: "☆",
+        concluido: "★"
+    },
+
+    flor: {
+        normal: "🌸",
+        concluido: "🌺"
+    },
+
+    numero: {
+        normal: "🔢",
+        concluido: "🔢"
+    },
+
+    nenhum: {
+        normal: "",
+        concluido: ""
+    }
+
+};
+
+function gerarId() {
+
+    return Date.now().toString(36) +
+        Math.random().toString(36).substring(2);
+
+}
+
+function criarItem(texto, marcador = "checkbox") {
+
+    return {
+
+        id: gerarId(),
+        texto: texto,
+        concluido: false,
+        marcador: marcador,
+        temCampo: false,
+        nomeCampo: "",
+        valorCampo: ""
+
+    };
+
+}
+
+function normalizarItem(item) {
+
+    if (typeof item === "string") {
+        return criarItem(item);
+    }
+
+    return {
+
+        id: item.id || gerarId(),
+        texto: item.texto || "",
+        concluido: Boolean(item.concluido),
+        marcador: item.marcador || "checkbox",
+        temCampo: Boolean(item.temCampo),
+        nomeCampo: item.nomeCampo || "",
+        valorCampo: item.valorCampo || ""
+
+    };
+
+}
+
+function normalizarDados(dados) {
+
+    return dados.map(pasta => {
+
+        pasta.topicos = (pasta.topicos || []).map(topico => {
+
+            topico.itens = (topico.itens || []).map(normalizarItem);
+
+            return topico;
+
+        });
+
+        return pasta;
+
+    });
+
+}
+
+function salvarDados() {
+
+    localStorage.setItem(
+        "minhaAgendaCompleta",
+        JSON.stringify(pastas)
+    );
+
+}
+
+function carregarDados() {
+
+    const dadosSalvos = localStorage.getItem(
+        "minhaAgendaCompleta"
+    );
+
+    if (dadosSalvos) {
+
+        try {
+
+            const dados = JSON.parse(dadosSalvos);
+
+            const dadosNormalizados = normalizarDados(dados);
+
+            localStorage.setItem(
+                "minhaAgendaCompleta",
+                JSON.stringify(dadosNormalizados)
+            );
+
+            return dadosNormalizados;
+
+        } catch (erro) {
+
+            console.error(
+                "Erro ao carregar dados:",
+                erro
+            );
+
+        }
+
+    }
+
+    localStorage.setItem(
+        "minhaAgendaCompleta",
+        JSON.stringify(agendaInicial)
+    );
+
+    return agendaInicial;
+
+}
+
+function renderizarPastas() {
+
+    const lista = document.getElementById("lista-pastas");
+
+    lista.innerHTML = "";
+
+    if (pastas.length === 0) {
+
+        lista.innerHTML = `
+            <div style="text-align:center;grid-column:1/-1;">
+                <p>Você ainda não possui nenhuma pasta.</p>
+            </div>
+        `;
+
+        return;
+
+    }
+
+    pastas.forEach(pasta => {
+
+        const card = document.createElement("div");
+
+        card.className = "pasta-card";
+
+        const progresso = calcularProgresso(pasta);
+
+        card.innerHTML = `
+
+            <div
+                class="pasta-icone"
+                onclick="abrirPasta('${pasta.id}')">
+
+                ${pasta.icone || "📁"}
+
+            </div>
+
+            <h3
+                onclick="abrirPasta('${pasta.id}')">
+
+                ${escaparHTML(pasta.nome)}
+
+            </h3>
+
+            <p
+                onclick="abrirPasta('${pasta.id}')">
+
+                ${pasta.topicos.length}
+                tópico(s)
+                •
+                ${progresso}%
+                concluído
+
+            </p>
+
+            <div class="pasta-acoes">
+
+                <button
+                    class="btn-secundario"
+                    onclick="renomearPasta('${pasta.id}')">
+
+                    ✏️ Renomear
+
+                </button>
+
+                <button
+                    class="btn-perigo"
+                    onclick="excluirPasta('${pasta.id}')">
+
+                    🗑️ Excluir
+
+                </button>
+
+            </div>
+
+        `;
+
+        lista.appendChild(card);
+
+    });
+
+}
+
+function abrirPasta(id) {
+
+    pastaAtual = pastas.find(
+        pasta => pasta.id === id
+    );
+
+    if (!pastaAtual) return;
+
+    document.getElementById(
+        "pagina-inicial"
+    ).style.display = "none";
+
+    document.getElementById(
+        "pagina-pasta"
+    ).style.display = "block";
+
+    document.getElementById(
+        "nome-pasta"
+    ).textContent = pastaAtual.nome;
+
+    renderizarTopicos();
+
+}
+
+function voltarInicio() {
+
+    pastaAtual = null;
+
+    modoEdicao = false;
+
+    document.body.classList.remove(
+        "modo-edicao"
+    );
+
+    document.getElementById(
+        "pagina-pasta"
+    ).style.display = "none";
+
+    document.getElementById(
+        "pagina-inicial"
+    ).style.display = "block";
+
+    renderizarPastas();
+
+}
+
+function abrirModalPasta() {
+
+    document.getElementById(
+        "modal-pasta"
+    ).style.display = "flex";
+
+    document.getElementById(
+        "input-nome-pasta"
+    ).focus();
+
+}
+
+function criarPasta() {
+
+    const nome = document.getElementById(
+        "input-nome-pasta"
+    ).value.trim();
+
+    if (!nome) {
+
+        alert("Digite um nome para a pasta.");
+
+        return;
+
+    }
+
+    pastas.push({
+
+        id: gerarId(),
+        nome: nome,
+        icone: "📁",
+        topicos: []
+
+    });
+
+    salvarDados();
+
+    fecharModais();
+
+    renderizarPastas();
+
+}
+
+function renomearPasta(id) {
+
+    const pasta = pastas.find(
+        pasta => pasta.id === id
+    );
+
+    const novoNome = prompt(
+        "Digite o novo nome da pasta:",
+        pasta.nome
+    );
+
+    if (!novoNome || !novoNome.trim()) return;
+
+    pasta.nome = novoNome.trim();
+
+    salvarDados();
+
+    renderizarPastas();
+
+}
+
+function excluirPasta(id) {
+
+    const pasta = pastas.find(
+        pasta => pasta.id === id
+    );
+
+    const confirmar = confirm(
+        `Deseja excluir a pasta "${pasta.nome}"?`
+    );
+
+    if (!confirmar) return;
+
+    pastas = pastas.filter(
+        pasta => pasta.id !== id
+    );
+
+    salvarDados();
+
+    renderizarPastas();
+
+}
+
+function renderizarTopicos() {
+
+    const lista = document.getElementById(
+        "lista-topicos"
+    );
+
+    lista.innerHTML = "";
+
+    if (pastaAtual.topicos.length === 0) {
+
+        lista.innerHTML = `
+
+            <div
+                style="
+                background:white;
+                padding:30px;
+                border-radius:20px;
+                text-align:center;
+                box-shadow:var(--sombra);
+                ">
+
+                <p>
+                    Esta pasta ainda não possui tópicos.
+                </p>
+
+                <button
+                    class="btn-principal"
+                    onclick="abrirModalTopico()">
+
+                    ＋ Criar primeiro tópico
+
+                </button>
+
+            </div>
+
+        `;
+
+        atualizarProgresso();
+
+        return;
+
+    }
+
+    pastaAtual.topicos.forEach(topico => {
+
+        const elemento = document.createElement(
+            "section"
+        );
+
+        elemento.className = "topico";
+
+        const tipoTexto =
+            topico.tipo === "checklist"
+            ? "☑️ Lista com marcação"
+            : "📝 Lista simples";
+
+        elemento.innerHTML = `
+
+            <div class="topico-cabecalho">
+
+                <div>
+
+                    <h2
+                        class="topico-titulo"
+                        contenteditable="${modoEdicao}"
+                        data-topico-id="${topico.id}">
+
+                        ${escaparHTML(topico.nome)}
+
+                    </h2>
+
+                    <span class="topico-tipo">
+                        ${tipoTexto}
+                    </span>
+
+                </div>
+
+                <div class="topico-acoes">
+
+                    <button
+                        class="btn-secundario"
+                        onclick="renomearTopico('${topico.id}')">
+
+                        ✏️ Renomear
+
+                    </button>
+
+                    <button
+                        class="btn-perigo"
+                        onclick="excluirTopico('${topico.id}')">
+
+                        🗑️ Excluir
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="lista-itens">
+
+                ${topico.itens
+                    .map(item => criarHTMLItem(item, topico))
+                    .join("")}
+
+            </div>
+
+            <div
+                class="adicionar-item"
+                onclick="adicionarItem('${topico.id}')">
+
+                ＋ Adicionar item
+
+            </div>
+
+        `;
+
+        lista.appendChild(elemento);
+
+    });
+
+    adicionarEventosTexto();
+
+    adicionarEventosTopico();
+
+    adicionarEventosCampos();
+
+    atualizarProgresso();
+
+}
+
+function criarHTMLItem(item, topico) {
+
+    const marcador =
+        marcadores[item.marcador]
+        || marcadores.checkbox;
+
+    let marcadorHTML = "";
+
+    if (item.marcador !== "nenhum") {
+
+        marcadorHTML = `
+
+            <span
+                class="marcador"
+                onclick="alternarItem('${topico.id}', '${item.id}')">
+
+                ${
+                    item.concluido
+                    ? marcador.concluido
+                    : marcador.normal
+                }
+
+            </span>
+
+        `;
+
+    }
+
+    let campoExtraHTML = "";
+
+    if (item.temCampo) {
+
+        campoExtraHTML = `
+
+            <div class="campo-extra">
+
+                <span class="nome-campo">
+
+                    ${escaparHTML(item.nomeCampo)}:
+
+                </span>
+
+                <input
+                    class="valor-campo"
+                    value="${escaparAtributo(item.valorCampo)}"
+                    placeholder="Digite..."
+                    data-topico-id="${topico.id}"
+                    data-item-id="${item.id}">
+
+            </div>
+
+        `;
+
+    }
+
+    return `
+
+        <div
+            class="item ${item.concluido ? "concluido" : ""}"
+            data-item-id="${item.id}">
+
+            ${marcadorHTML}
+
+            <span
+                class="texto-item"
+                contenteditable="${modoEdicao}"
+                data-item-id="${item.id}">
+
+                ${escaparHTML(item.texto)}
+
+            </span>
+
+            ${campoExtraHTML}
+
+            <button
+                class="botao-excluir-item"
+                onclick="excluirItem('${topico.id}', '${item.id}')">
+
+                Excluir
+
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+function abrirModalTopico() {
+
+    document.getElementById(
+        "modal-topico"
+    ).style.display = "flex";
+
+    document.getElementById(
+        "input-nome-topico"
+    ).focus();
+
+}
+
+function criarTopico() {
+
+    const nome = document.getElementById(
+        "input-nome-topico"
+    ).value.trim();
+
+    const tipo = document.getElementById(
+        "input-tipo-topico"
+    ).value;
+
+    if (!nome) {
+
+        alert("Digite um nome para o tópico.");
+
+        return;
+
+    }
+
+    pastaAtual.topicos.push({
+
+        id: gerarId(),
+        nome: nome,
+        tipo: tipo,
+        itens: []
+
+    });
+
+    salvarDados();
+
+    fecharModais();
+
+    renderizarTopicos();
+
+}
+
+function renomearTopico(id) {
+
+    const topico = pastaAtual.topicos.find(
+        topico => topico.id === id
+    );
+
+    const novoNome = prompt(
+        "Digite o novo nome do tópico:",
+        topico.nome
+    );
+
+    if (!novoNome || !novoNome.trim()) return;
+
+    topico.nome = novoNome.trim();
+
+    salvarDados();
+
+    renderizarTopicos();
+
+}
+
+function excluirTopico(id) {
+
+    const topico = pastaAtual.topicos.find(
+        topico => topico.id === id
+    );
+
+    const confirmar = confirm(
+        `Deseja excluir o tópico "${topico.nome}"?`
+    );
+
+    if (!confirmar) return;
+
+    pastaAtual.topicos =
+        pastaAtual.topicos.filter(
+            topico => topico.id !== id
+        );
+
+    salvarDados();
+
+    renderizarTopicos();
+
+}
+
+function adicionarItem(topicoId) {
+
+    const topico = pastaAtual.topicos.find(
+        topico => topico.id === topicoId
+    );
+
+    if (!topico) return;
+
+    abrirModalItem(topicoId);
+
+}
+
+function abrirModalItem(topicoId) {
+
+    topicoSelecionado =
+        pastaAtual.topicos.find(
+            topico => topico.id === topicoId
+        );
+
+    if (!topicoSelecionado) return;
+
+    document.getElementById(
+        "modal-item"
+    ).style.display = "flex";
+
+    document.getElementById(
+        "input-texto-item"
+    ).focus();
+
+}
+
+function criarNovoItem() {
+
+    const texto = document.getElementById(
+        "input-texto-item"
+    ).value.trim();
+
+    const marcador = document.getElementById(
+        "input-marcador"
+    ).value;
+
+    const temCampo = document.getElementById(
+        "input-tem-campo"
+    ).checked;
+
+    const nomeCampo = document.getElementById(
+        "input-nome-campo"
+    ).value.trim();
+
+    const valorCampo = document.getElementById(
+        "input-valor-campo"
+    ).value.trim();
+
+    if (!texto) {
+
+        alert("Digite o texto da linha.");
+
+        return;
+
+    }
+
+    if (!topicoSelecionado) return;
+
+    topicoSelecionado.itens.push({
+
+        id: gerarId(),
+        texto: texto,
+        concluido: false,
+        marcador: marcador,
+        temCampo: temCampo,
+        nomeCampo: temCampo
+            ? nomeCampo || "Extra"
+            : "",
+        valorCampo: temCampo
+            ? valorCampo
+            : ""
+
+    });
+
+    salvarDados();
+
+    fecharModais();
+
+    renderizarTopicos();
+
+}
+
+function alternarItem(topicoId, itemId) {
+
+    const topico = pastaAtual.topicos.find(
+        topico => topico.id === topicoId
+    );
+
+    if (!topico) return;
+
+    const item = topico.itens.find(
+        item => item.id === itemId
+    );
+
+    if (!item) return;
+
+    item.concluido = !item.concluido;
+
+    salvarDados();
+
+    renderizarTopicos();
+
+}
+
+function excluirItem(topicoId, itemId) {
+
+    const topico = pastaAtual.topicos.find(
+        topico => topico.id === topicoId
+    );
+
+    if (!topico) return;
+
+    topico.itens = topico.itens.filter(
+        item => item.id !== itemId
+    );
+
+    salvarDados();
+
+    renderizarTopicos();
+
+}
+
+function salvarCampoExtra(topicoId, itemId, valor) {
+
+    const topico = pastaAtual.topicos.find(
+        topico => topico.id === topicoId
+    );
+
+    if (!topico) return;
+
+    const item = topico.itens.find(
+        item => item.id === itemId
+    );
+
+    if (!item) return;
+
+    item.valorCampo = valor;
+
+    salvarDados();
+
+}
+
+function alternarEdicao() {
+
+    modoEdicao = !modoEdicao;
+
+    document.body.classList.toggle(
+        "modo-edicao",
+        modoEdicao
+    );
+
+    document.getElementById(
+        "botao-editar"
+    ).textContent = modoEdicao
+        ? "💾 Salvar alterações"
+        : "✏️ Editar";
+
+    renderizarTopicos();
+
+}
+
+function adicionarEventosTexto() {
+
+    document.querySelectorAll(
+        ".texto-item"
+    ).forEach(elemento => {
+
+        elemento.addEventListener(
+            "input",
+            function() {
+
+                const item = encontrarItem(
+                    this.dataset.itemId
+                );
+
+                if (item) {
+
+                    item.texto =
+                        this.innerText.trim();
+
+                    salvarDados();
+
+                }
+
+            }
+        );
+
+    });
+
+}
+
+function adicionarEventosTopico() {
+
+    document.querySelectorAll(
+        ".topico-titulo"
+    ).forEach(elemento => {
+
+        elemento.addEventListener(
+            "input",
+            function() {
+
+                const topico =
+                    pastaAtual.topicos.find(
+                        topico =>
+                        topico.id ===
+                        this.dataset.topicoId
+                    );
+
+                if (topico) {
+
+                    topico.nome =
+                        this.innerText.trim();
+
+                    salvarDados();
+
+                }
+
+            }
+        );
+
+    });
+
+}
+
+function adicionarEventosCampos() {
+
+    document.querySelectorAll(
+        ".valor-campo"
+    ).forEach(campo => {
+
+        campo.addEventListener(
+            "input",
+            function() {
+
+                salvarCampoExtra(
+                    this.dataset.topicoId,
+                    this.dataset.itemId,
+                    this.value
+                );
+
+            }
+        );
+
+    });
+
+}
+
+function encontrarItem(id) {
+
+    for (
+        const topico
+        of pastaAtual.topicos
+    ) {
+
+        const item = topico.itens.find(
+            item => item.id === id
+        );
+
+        if (item) return item;
+
+    }
+
+    return null;
+
+}
+
+function calcularProgresso(pasta) {
+
+    let total = 0;
+
+    let concluidos = 0;
+
+    pasta.topicos.forEach(topico => {
+
+        topico.itens.forEach(item => {
+
+            if (item.marcador !== "nenhum") {
+
+                total++;
+
+                if (item.concluido) {
+                    concluidos++;
+                }
+
+            }
+
+        });
+
+    });
+
+    if (total === 0) return 0;
+
+    return Math.round(
+        (concluidos / total) * 100
+    );
+
+}
+
+function atualizarProgresso() {
+
+    if (!pastaAtual) return;
+
+    const progresso =
+        calcularProgresso(pastaAtual);
+
+    document.getElementById(
+        "barra-progresso"
+    ).style.width =
+        progresso + "%";
+
+    document.getElementById(
+        "texto-progresso"
+    ).textContent =
+        progresso + "% concluído";
+
+}
+
+function prepararCampoExtra() {
+
+    const checkbox =
+        document.getElementById(
+            "input-tem-campo"
+        );
+
+    const configuracao =
+        document.getElementById(
+            "config-campo-extra"
+        );
+
+    configuracao.style.display =
+        checkbox.checked
+        ? "block"
+        : "none";
+
+}
+
+function fecharModais() {
+
+    document.querySelectorAll(
+        ".modal-fundo"
+    ).forEach(modal => {
+
+        modal.style.display = "none";
+
+    });
+
+    document.querySelectorAll(
+        ".modal input"
+    ).forEach(input => {
+
+        if (input.type !== "checkbox") {
+            input.value = "";
+        }
+
+    });
+
+    const checkbox =
+        document.getElementById(
+            "input-tem-campo"
+        );
+
+    if (checkbox) {
+        checkbox.checked = false;
+    }
+
+    const configuracao =
+        document.getElementById(
+            "config-campo-extra"
+        );
+
+    if (configuracao) {
+        configuracao.style.display = "none";
+    }
+
+    topicoSelecionado = null;
+
+}
+
+function escaparHTML(texto) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent = texto || "";
+
+    return div.innerHTML;
+
+}
+
+function escaparAtributo(texto) {
+
+    return String(texto || "")
+        .replace(/&/g, "&amp;")
+        .replace(/"/g, "&quot;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+
+}
+
+document.getElementById(
+    "input-tem-campo"
+).addEventListener(
+    "change",
+    prepararCampoExtra
+);
+
+renderizarPastas();
+
+</script>
+
+</body>
+</html>
+
+<script>
+
+/* =====================================================
+   DADOS INICIAIS
+===================================================== */
+
+const agendaInicial = [
+
+    {
+
+        id: gerarId(),
+
+        nome: "Projeto 2 — O Caderno",
+
+        icone: "📖",
+
+        topicos: [
+
+            {
+
+                id: gerarId(),
+
+                nome: "Capa",
+
+                tipo: "checklist",
+
+                itens: [
+
+                    "20 capítulos da mulher que mudou minha vida",
+
+                    "Tudo o que eu nunca quero que você esqueça",
+
+                    "Um pedacinho do nosso infinito",
+
+                    "A história mais bonita que eu conheço"
+
+                ].map(criarItem)
+
+            },
+
+            {
+
+                id: gerarId(),
+
+                nome: "1. Página de dedicatória",
+
+                tipo: "checklist",
+
+                itens: [
+
+                    "Contar por que decidi fazer aquele caderno"
+
+                ].map(criarItem)
+
+            },
+
+            {
+
+                id: gerarId(),
+
+                nome: "2. Linha do tempo",
+
+                tipo: "checklist",
+
+                itens: [
+
+                    "Como vocês se conheceram",
+
+                    "Primeira conversa",
+
+                    "Primeiro encontro",
+
+                    "Primeiro beijo",
+
+                    "Primeiro eu te amo",
+
+                    "Primeira viagem",
+
+                    "Momentos engraçados",
+
+                    "Adicionar fotos"
+
+                ].map(criarItem)
+
+            },
+
+            {
+
+                id: gerarId(),
+
+                nome: "3. 20 coisas que eu amo em você",
+
+                tipo: "checklist",
+
+                itens: [
+
+                    "Seu jeito de cuidar",
+
+                    "Sua risada",
+
+                    "Sua determinação",
+
+                    "Sua inteligência",
+
+                    "Sua coragem",
+
+                    "Seu abraço",
+
+                    "Sua paciência"
+
+                ].map(criarItem)
+
+            },
+
+            {
+
+                id: gerarId(),
+
+                nome: "4. Playlist da nossa história",
+
+                tipo: "checklist",
+
+                itens: [
+
+                    "Escolher as músicas",
+
+                    "Escrever por que cada música lembra vocês",
+
+                    "Escrever onde ouviram",
+
+                    "Adicionar a frase favorita",
+
+                    "Adicionar QR Codes do Spotify"
+
+                ].map(criarItem)
+
+            },
+
+            {
+
+                id: gerarId(),
+
+                nome: "5. Nosso álbum",
+
+                tipo: "checklist",
+
+                itens: [
+
+                    "Escolher as fotos",
+
+                    "Escrever a história por trás de cada foto"
+
+                ].map(criarItem)
+
+            },
+
+            {
+
+                id: gerarId(),
+
+                nome: "6. Você provavelmente não percebe...",
+
+                tipo: "checklist",
+
+                itens: [
+
+                    "Escrever pequenas coisas que ela faz e talvez nem perceba",
+
+                    "Você sempre ajeita o cabelo quando está nervosa",
+
+                    "Você sorri diferente quando está realmente feliz",
+
+                    "Você aperta minha mão quando está confortável"
+
+                ].map(criarItem)
+
+            },
+
+            {
+
+                id: gerarId(),
+
+                nome: "7. Nossos lugares",
+
+                tipo: "checklist",
+
+                itens: [
+
+                    "Criar um mapa com lugares importantes",
+
+                    "Marcar os lugares importantes",
+
+                    "Escrever a história de cada lugar"
+
+                ].map(criarItem)
+
+            },
+
+            {
+
+                id: gerarId(),
+
+                nome: "8. Página das primeiras vezes",
+
+                tipo: "checklist",
+
+                itens: [
+
+                    "Primeiro abraço",
+
+                    "Primeiro presente",
+
+                    "Primeira foto",
+
+                    "Primeira viagem",
+
+                    "Primeiro cinema",
+
+                    "Primeira chamada de vídeo",
+
+                    "Primeiro aniversário juntas"
+
+                ].map(criarItem)
+
+            },
+
+            {
+
+                id: gerarId(),
+
+                nome: "9. Frases que são a cara dela",
+
+                tipo: "checklist",
+
+                itens: [
+
+                    "Anotar frases que ela fala sempre"
+
+                ].map(criarItem)
+
+            },
+
+            {
+
+                id: gerarId(),
+
+                nome: "10. Se eu pudesse congelar alguns momentos...",
+
+                tipo: "checklist",
+
+                itens: [
+
+                    "Escolher 10 momentos especiais",
+
+                    "Explicar por que gostaria de revivê-los"
+
+                ].map(criarItem)
+
+            },
+
+            {
+
+                id: gerarId(),
+
+                nome: "11. Curiosidades sobre nós",
+
+                tipo: "checklist",
+
+                itens: [
+
+                    "Quantas fotos temos",
+
+                    "Quantos dias juntas",
+
+                    "Quem pediu namoro",
+
+                    "Quem dorme primeiro",
+
+                    "Quem manda mais mensagens",
+
+                    "Música mais ouvida",
+
+                    "Filme favorito"
+
+                ].map(criarItem)
+
+            },
+
+            {
+
+                id: gerarId(),
+
+                nome: "12. Página de sonhos",
+
+                tipo: "checklist",
+
+                itens: [
+
+                    "Lugares para conhecer",
+
+                    "Coisas para fazer",
+
+                    "Metas do casal"
+
+                ].map(criarItem)
+
+            },
+
+            {
+
+                id: gerarId(),
+
+                nome: "13. Bucket List do casal",
+
+                tipo: "checklist",
+
+                itens: [
+
+                    "Acampar",
+
+                    "Ver neve",
+
+                    "Fazer piquenique",
+
+                    "Cozinhar juntas",
+
+                    "Aprender dança",
+
+                    "Viajar de trem",
+
+                    "Adicionar mais itens à Bucket List"
+
+                ].map(criarItem)
+
+            },
+
+            {
+
+                id: gerarId(),
+
+                nome: "14. Vale-presentes",
+
+                tipo: "checklist",
+
+                itens: [
+
+                    "Vale um café",
+
+                    "Vale um jantar",
+
+                    "Vale escolher o filme",
+
+                    "Vale um abraço de cinco minutos",
+
+                    "Vale um passeio surpresa"
+
+                ].map(criarItem)
+
+            },
+
+            {
+
+                id: gerarId(),
+
+                nome: "15. Quiz sobre nós",
+
+                tipo: "checklist",
+
+                itens: [
+
+                    "Quem dorme primeiro?",
+
+                    "Quem demora mais para responder?",
+
+                    "Quem canta pior?",
+
+                    "Quem chora em filme?",
+
+                    "Escrever as respostas na página seguinte"
+
+                ].map(criarItem)
+
+            },
+
+            {
+
+                id: gerarId(),
+
+                nome: "16. Página E se...",
+
+                tipo: "checklist",
+
+                itens: [
+
+                    "Se pudéssemos morar em qualquer país?",
+
+                    "Se ganhássemos na loteria?",
+
+                    "Se tivéssemos um café?"
+
+                ].map(criarItem)
+
+            },
+
+            {
+
+                id: gerarId(),
+
+                nome: "17. Mensagens de pessoas importantes",
+
+                tipo: "checklist",
+
+                itens: [
+
+                    "Pedir pequenos textos para amigos ou familiares",
+
+                    "Organizar as mensagens no caderno"
+
+                ].map(criarItem)
+
+            },
+
+            {
+
+                id: gerarId(),
+
+                nome: "18. Cápsula do tempo",
+
+                tipo: "checklist",
+
+                itens: [
+
+                    "Escrever como imaginamos nossa vida daqui a 1 ano",
+
+                    "Escrever como imaginamos nossa vida daqui a 5 anos",
+
+                    "Escrever como imaginamos nossa vida daqui a 10 anos"
+
+                ].map(criarItem)
+
+            },
+
+            {
+
+                id: gerarId(),
+
+                nome: "19. Espaço em branco",
+
+                tipo: "checklist",
+
+                itens: [
+
+                    "Deixar páginas para continuar escrevendo nos próximos aniversários"
+
+                ].map(criarItem)
+
+            },
+
+            {
+
+                id: gerarId(),
+
+                nome: "20. Última página",
+
+                tipo: "checklist",
+
+                itens: [
+
+                    "Escrever uma carta final",
+
+                    "Esse caderno nunca ficará completo, porque nossa história continua sendo escrita todos os dias."
+
+                ].map(criarItem)
+
+            }
+
+        ]
+
+    }
+
+];
+
+
+/* =====================================================
+   VARIÁVEIS
+===================================================== */
+
+let pastas = carregarDados();
+
+let pastaAtual = null;
+
+let modoEdicao = false;
+
+
+/* =====================================================
+   MARCADORES
+===================================================== */
+
+const marcadores = {
+
+    checkbox: {
+
+        normal: "☐",
+
+        concluido: "☑"
+
+    },
+
+    bolinha: {
+
+        normal: "○",
+
+        concluido: "●"
+
+    },
+
+    coracao: {
+
+        normal: "♡",
+
+        concluido: "♥"
+
+    },
+
+    estrela: {
+
+        normal: "☆",
+
+        concluido: "★"
+
+    },
+
+    flor: {
+
+        normal: "🌸",
+
+        concluido: "🌺"
+
+    },
+
+    numero: {
+
+        normal: "🔢",
+
+        concluido: "🔢"
+
+    },
+
+    nenhum: {
+
+        normal: "",
+
+        concluido: ""
+
+    }
+
+};
+
+
+/* =====================================================
+   FUNÇÕES BÁSICAS
+===================================================== */
+
+function gerarId() {
+
+    return Date.now().toString(36)
+
+        + Math.random()
+
+        .toString(36)
+
+        .substring(2);
+
+}
+
+
+function criarItem(texto, marcador = "checkbox") {
+
+    return {
+
+        id: gerarId(),
+
+        texto: texto,
+
+        concluido: false,
+
+        marcador: marcador,
+
+        temCampo: false,
+
+        nomeCampo: "",
+
+        valorCampo: ""
+
+    };
+
+}
+
+
+function normalizarItem(item) {
+
+    if (typeof item === "string") {
+
+        return criarItem(item);
+
+    }
+
+    return {
+
+        id: item.id || gerarId(),
+
+        texto: item.texto || "",
+
+        concluido: Boolean(item.concluido),
+
+        marcador: item.marcador || "checkbox",
+
+        temCampo: Boolean(item.temCampo),
+
+        nomeCampo: item.nomeCampo || "",
+
+        valorCampo: item.valorCampo || ""
+
+    };
+
+}
+
+
+function normalizarDados(dados) {
+
+    return dados.map(pasta => {
+
+        pasta.topicos =
+
+            (pasta.topicos || []).map(topico => {
+
+                topico.itens =
+
+                    (topico.itens || [])
+
+                    .map(normalizarItem);
+
+                return topico;
+
+            });
+
+        return pasta;
+
+    });
+
+}
+
+
+function salvarDados() {
+
+    localStorage.setItem(
+
+        "minhaAgendaCompleta",
+
+        JSON.stringify(pastas)
+
+    );
+
+}
+
+
+function carregarDados() {
+
+    const dadosSalvos =
+
+        localStorage.getItem(
+
+            "minhaAgendaCompleta"
+
+        );
+
+    if (dadosSalvos) {
+
+        try {
+
+            const dados =
+
+                JSON.parse(dadosSalvos);
+
+            const dadosNormalizados =
+
+                normalizarDados(dados);
+
+            localStorage.setItem(
+
+                "minhaAgendaCompleta",
+
+                JSON.stringify(
+
+                    dadosNormalizados
+
+                )
+
+            );
+
+            return dadosNormalizados;
+
+        }
+
+        catch (erro) {
+
+            console.error(
+
+                "Erro ao carregar dados:",
+
+                erro
+
+            );
+
+        }
+
+    }
+
+    localStorage.setItem(
+
+        "minhaAgendaCompleta",
+
+        JSON.stringify(agendaInicial)
+
+    );
+
+    return agendaInicial;
+
+}
+
+
+/* =====================================================
+   PÁGINA INICIAL
+===================================================== */
+
+function renderizarPastas() {
+
+    const lista =
+
+        document.getElementById(
+
+            "lista-pastas"
+
+        );
+
+    lista.innerHTML = "";
+
+    if (pastas.length === 0) {
+
+        lista.innerHTML = `
+
+            <div
+
+                style="
+
+                text-align:center;
+
+                grid-column:1/-1;
+
+                ">
+
+                <p>
+
+                    Você ainda não possui nenhuma pasta.
+
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+    pastas.forEach(pasta => {
+
+        const card =
+
+            document.createElement(
+
+                "div"
+
+            );
+
+        card.className =
+
+            "pasta-card";
+
+        const progresso =
+
+            calcularProgresso(pasta);
+
+        card.innerHTML = `
+
+            <div
+
+                class="pasta-icone"
+
+                onclick="
+
+                abrirPasta(
+
+                    '${pasta.id}'
+
+                )">
+
+                ${pasta.icone || "📁"}
+
+            </div>
+
+            <h3
+
+                onclick="
+
+                abrirPasta(
+
+                    '${pasta.id}'
+
+                )">
+
+                ${escaparHTML(pasta.nome)}
+
+            </h3>
+
+            <p
+
+                onclick="
+
+                abrirPasta(
+
+                    '${pasta.id}'
+
+                )">
+
+                ${pasta.topicos.length}
+
+                tópico(s)
+
+                •
+
+                ${progresso}%
+
+                concluído
+
+            </p>
+
+            <div class="pasta-acoes">
+
+                <button
+
+                    class="btn-secundario"
+
+                    onclick="
+
+                    renomearPasta(
+
+                        '${pasta.id}'
+
+                    )">
+
+                    ✏️ Renomear
+
+                </button>
+
+                <button
+
+                    class="btn-perigo"
+
+                    onclick="
+
+                    excluirPasta(
+
+                        '${pasta.id}'
+
+                    )">
+
+                    🗑️ Excluir
+
+                </button>
+
+            </div>
+
+        `;
+
+        lista.appendChild(card);
+
+    });
+
+}
+
+
+/* =====================================================
+   ABRIR PASTA
+===================================================== */
+
+function abrirPasta(id) {
+
+    pastaAtual =
+
+        pastas.find(
+
+            pasta => pasta.id === id
+
+        );
+
+    if (!pastaAtual) return;
+
+    document.getElementById(
+
+        "pagina-inicial"
+
+    ).style.display = "none";
+
+    document.getElementById(
+
+        "pagina-pasta"
+
+    ).style.display = "block";
+
+    document.getElementById(
+
+        "nome-pasta"
+
+    ).textContent =
+
+        pastaAtual.nome;
+
+    renderizarTopicos();
+
+}
+
+
+/* =====================================================
+   VOLTAR
+===================================================== */
+
+function voltarInicio() {
+
+    pastaAtual = null;
+
+    modoEdicao = false;
+
+    document.body.classList.remove(
+
+        "modo-edicao"
+
+    );
+
+    document.getElementById(
+
+        "pagina-pasta"
+
+    ).style.display = "none";
+
+    document.getElementById(
+
+        "pagina-inicial"
+
+    ).style.display = "block";
+
+    renderizarPastas();
+
+}
+
+
+/* =====================================================
+   CRIAR PASTA
+===================================================== */
+
+function abrirModalPasta() {
+
+    document.getElementById(
+
+        "modal-pasta"
+
+    ).style.display = "flex";
+
+    document.getElementById(
+
+        "input-nome-pasta"
+
+    ).focus();
+
+}
+
+
+function criarPasta() {
+
+    const nome =
+
+        document.getElementById(
+
+            "input-nome-pasta"
+
+        ).value.trim();
+
+    if (!nome) {
+
+        alert(
+
+            "Digite um nome para a pasta."
+
+        );
+
+        return;
+
+    }
+
+    pastas.push({
+
+        id: gerarId(),
+
+        nome: nome,
+
+        icone: "📁",
+
+        topicos: []
+
+    });
+
+    salvarDados();
+
+    fecharModais();
+
+    renderizarPastas();
+
+}
+
+
+/* =====================================================
+   RENOMEAR PASTA
+===================================================== */
+
+function renomearPasta(id) {
+
+    const pasta =
+
+        pastas.find(
+
+            pasta => pasta.id === id
+
+        );
+
+    const novoNome =
+
+        prompt(
+
+            "Digite o novo nome da pasta:",
+
+            pasta.nome
+
+        );
+
+    if (
+
+        !novoNome ||
+
+        !novoNome.trim()
+
+    ) return;
+
+    pasta.nome =
+
+        novoNome.trim();
+
+    salvarDados();
+
+    renderizarPastas();
+
+}
+
+
+/* =====================================================
+   EXCLUIR PASTA
+===================================================== */
+
+function excluirPasta(id) {
+
+    const pasta =
+
+        pastas.find(
+
+            pasta => pasta.id === id
+
+        );
+
+    const confirmar =
+
+        confirm(
+
+            `Deseja excluir a pasta "${pasta.nome}"?`
+
+        );
+
+    if (!confirmar) return;
+
+    pastas =
+
+        pastas.filter(
+
+            pasta => pasta.id !== id
+
+        );
+
+    salvarDados();
+
+    renderizarPastas();
+
+}
+
+
+/* =====================================================
+   RENDERIZAR TÓPICOS
+===================================================== */
+
+function renderizarTopicos() {
+
+    const lista =
+
+        document.getElementById(
+
+            "lista-topicos"
+
+        );
+
+    lista.innerHTML = "";
+
+    if (
+
+        pastaAtual.topicos.length === 0
+
+    ) {
+
+        lista.innerHTML = `
+
+            <div
+
+                style="
+
+                background:white;
+
+                padding:30px;
+
+                border-radius:20px;
+
+                text-align:center;
+
+                box-shadow:var(--sombra);
+
+                ">
+
+                <p>
+
+                    Esta pasta ainda não possui tópicos.
+
+                </p>
+
+                <button
+
+                    class="btn-principal"
+
+                    onclick="
+
+                    abrirModalTopico()">
+
+                    ＋ Criar primeiro tópico
+
+                </button>
+
+            </div>
+
+        `;
+
+        atualizarProgresso();
+
+        return;
+
+    }
+
+    pastaAtual.topicos.forEach(topico => {
+
+        const elemento =
+
+            document.createElement(
+
+                "section"
+
+            );
+
+        elemento.className = "topico";
+
+        const tipoTexto =
+
+            topico.tipo === "checklist"
+
+            ? "☑️ Lista com marcação"
+
+            : "📝 Lista simples";
+
+        elemento.innerHTML = `
+
+            <div
+
+                class="topico-cabecalho">
+
+                <div>
+
+                    <h2
+
+                        class="topico-titulo"
+
+                        contenteditable=
+
+                        "${modoEdicao}"
+
+                        data-topico-id=
+
+                        "${topico.id}">
+
+                        ${escaparHTML(
+
+                            topico.nome
+
+                        )}
+
+                    </h2>
+
+                    <span
+
+                        class="topico-tipo">
+
+                        ${tipoTexto}
+
+                    </span>
+
+                </div>
+
+                <div
+
+                    class="topico-acoes">
+
+                    <button
+
+                        class="btn-secundario"
+
+                        onclick="
+
+                        renomearTopico(
+
+                            '${topico.id}'
+
+                        )">
+
+                        ✏️ Renomear
+
+                    </button>
+
+                    <button
+
+                        class="btn-perigo"
+
+                        onclick="
+
+                        excluirTopico(
+
+                            '${topico.id}'
+
+                        )">
+
+                        🗑️ Excluir
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div
+
+                class="lista-itens">
+
+                ${topico.itens
+
+                    .map(
+
+                        item =>
+
+                        criarHTMLItem(
+
+                            item,
+
+                            topico
+
+                        )
+
+                    )
+
+                    .join("")}
+
+            </div>
+
+            <div
+
+                class="adicionar-item"
+
+                onclick="
+
+                adicionarItem(
+
+                    '${topico.id}'
+
+                )">
+
+                ＋ Adicionar item
+
+            </div>
+
+        `;
+
+        lista.appendChild(elemento);
+
+    });
+
+    adicionarEventosTexto();
+
+    adicionarEventosTopico();
+
+    adicionarEventosCampos();
+
+    atualizarProgresso();
+
+}
+
+
+/* =====================================================
+   CRIAR HTML DO ITEM
+===================================================== */
+
+function criarHTMLItem(item, topico) {
+
+    const marcador =
+
+        marcadores[item.marcador]
+
+        || marcadores.checkbox;
+
+    let marcadorHTML = "";
+
+    if (
+
+        item.marcador !== "nenhum"
+
+    ) {
+
+        marcadorHTML = `
+
+            <span
+
+                class="marcador"
+
+                onclick="
+
+                alternarItem(
+
+                    '${topico.id}',
+
+                    '${item.id}'
+
+                )">
+
+                ${
+
+                    item.concluido
+
+                    ? marcador.concluido
+
+                    : marcador.normal
+
+                }
+
+            </span>
+
+        `;
+
+    }
+
+    let campoExtraHTML = "";
+
+    if (item.temCampo) {
+
+        campoExtraHTML = `
+
+            <div
+
+                class="campo-extra">
+
+                <span
+
+                    class="nome-campo">
+
+                    ${escaparHTML(
+
+                        item.nomeCampo
+
+                    )}:
+
+                </span>
+
+                <input
+
+                    class="valor-campo"
+
+                    value="${
+
+                        escaparAtributo(
+
+                            item.valorCampo
+
+                        )
+
+                    }"
+
+                    placeholder="Digite..."
+
+                    data-topico-id=
+
+                    "${topico.id}"
+
+                    data-item-id=
+
+                    "${item.id}">
+
+            </div>
+
+        `;
+
+    }
+
+    return `
+
+        <div
+
+            class="item
+
+            ${
+
+                item.concluido
+
+                ? "concluido"
+
+                : ""
+
+            }"
+
+            data-item-id=
+
+            "${item.id}">
+
+            ${marcadorHTML}
+
+            <span
+
+                class="texto-item"
+
+                contenteditable=
+
+                "${modoEdicao}"
+
+                data-item-id=
+
+                "${item.id}">
+
+                ${escaparHTML(
+
+                    item.texto
+
+                )}
+
+            </span>
+
+            ${campoExtraHTML}
+
+            <button
+
+                class="botao-excluir-item"
+
+                onclick="
+
+                excluirItem(
+
+                    '${topico.id}',
+
+                    '${item.id}'
+
+                )">
+
+                Excluir
+
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   CRIAR TÓPICO
+===================================================== */
+
+function abrirModalTopico() {
+
+    document.getElementById(
+
+        "modal-topico"
+
+    ).style.display = "flex";
+
+    document.getElementById(
+
+        "input-nome-topico"
+
+    ).focus();
+
+}
+
+
+function criarTopico() {
+
+    const nome =
+
+        document.getElementById(
+
+            "input-nome-topico"
+
+        ).value.trim();
+
+    const tipo =
+
+        document.getElementById(
+
+            "input-tipo-topico"
+
+        ).value;
+
+    if (!nome) {
+
+        alert(
+
+            "Digite um nome para o tópico."
+
+        );
+
+        return;
+
+    }
+
+    pastaAtual.topicos.push({
+
+        id: gerarId(),
+
+        nome: nome,
+
+        tipo: tipo,
+
+        itens: []
+
+    });
+
+    salvarDados();
+
+    fecharModais();
+
+    renderizarTopicos();
+
+}
+
+
+/* =====================================================
+   RENOMEAR TÓPICO
+===================================================== */
+
+function renomearTopico(id) {
+
+    const topico =
+
+        pastaAtual.topicos.find(
+
+            topico => topico.id === id
+
+        );
+
+    const novoNome =
+
+        prompt(
+
+            "Digite o novo nome do tópico:",
+
+            topico.nome
+
+        );
+
+    if (
+
+        !novoNome ||
+
+        !novoNome.trim()
+
+    ) return;
+
+    topico.nome =
+
+        novoNome.trim();
+
+    salvarDados();
+
+    renderizarTopicos();
+
+}
+
+
+/* =====================================================
+   EXCLUIR TÓPICO
+===================================================== */
+
+function excluirTopico(id) {
+
+    const topico =
+
+        pastaAtual.topicos.find(
+
+            topico => topico.id === id
+
+        );
+
+    const confirmar =
+
+        confirm(
+
+            `Deseja excluir o tópico "${topico.nome}"?`
+
+        );
+
+    if (!confirmar) return;
+
+    pastaAtual.topicos =
+
+        pastaAtual.topicos.filter(
+
+            topico => topico.id !== id
+
+        );
+
+    salvarDados();
+
+    renderizarTopicos();
+
+}
+
+
+/* =====================================================
+   ADICIONAR ITEM
+===================================================== */
+
+function adicionarItem(topicoId) {
+
+    const topico =
+
+        pastaAtual.topicos.find(
+
+            topico => topico.id === topicoId
+
+        );
+
+    if (!topico) return;
+
+    abrirModalItem(topicoId);
+
+}
+
+
+/* =====================================================
+   ABRIR MODAL DE ITEM
+===================================================== */
+
+function abrirModalItem(topicoId) {
+
+    window.topicoSelecionado =
+
+        pastaAtual.topicos.find(
+
+            topico => topico.id === topicoId
+
+        );
+
+    if (!window.topicoSelecionado) {
+
+        return;
+
+    }
+
+    document.getElementById(
+
+        "modal-item"
+
+    ).style.display = "flex";
+
+    document.getElementById(
+
+        "input-texto-item"
+
+    ).focus();
+
+}
+
+
+/* =====================================================
+   CRIAR ITEM
+===================================================== */
+
+function criarNovoItem() {
+
+    const texto =
+
+        document.getElementById(
+
+            "input-texto-item"
+
+        ).value.trim();
+
+    const marcador =
+
+        document.getElementById(
+
+            "input-marcador"
+
+        ).value;
+
+    const temCampo =
+
+        document.getElementById(
+
+            "input-tem-campo"
+
+        ).checked;
+
+    const nomeCampo =
+
+        document.getElementById(
+
+            "input-nome-campo"
+
+        ).value.trim();
+
+    const valorCampo =
+
+        document.getElementById(
+
+            "input-valor-campo"
+
+        ).value.trim();
+
+    if (!texto) {
+
+        alert(
+
+            "Digite o texto da linha."
+
+        );
+
+        return;
+
+    }
+
+    window.topicoSelecionado.itens.push({
+
+        id: gerarId(),
+
+        texto: texto,
+
+        concluido: false,
+
+        marcador: marcador,
+
+        temCampo: temCampo,
+
+        nomeCampo:
+
+            temCampo
+
+            ? nomeCampo || "Extra"
+
+            : "",
+
+        valorCampo:
+
+            temCampo
+
+            ? valorCampo
+
+            : ""
+
+    });
+
+    salvarDados();
+
+    fecharModais();
+
+    renderizarTopicos();
+
+}
+
+
+/* =====================================================
+   ALTERNAR ITEM
+===================================================== */
+
+function alternarItem(
+
+    topicoId,
+
+    itemId
+
+) {
+
+    const topico =
+
+        pastaAtual.topicos.find(
+
+            topico => topico.id === topicoId
+
+        );
+
+    if (!topico) return;
+
+    const item =
+
+        topico.itens.find(
+
+            item => item.id === itemId
+
+        );
+
+    if (!item) return;
+
+    item.concluido =
+
+        !item.concluido;
+
+    salvarDados();
+
+    renderizarTopicos();
+
+}
+
+
+/* =====================================================
+   EXCLUIR ITEM
+===================================================== */
+
+function excluirItem(
+
+    topicoId,
+
+    itemId
+
+) {
+
+    const topico =
+
+        pastaAtual.topicos.find(
+
+            topico => topico.id === topicoId
+
+        );
+
+    if (!topico) return;
+
+    topico.itens =
+
+        topico.itens.filter(
+
+            item => item.id !== itemId
+
+        );
+
+    salvarDados();
+
+    renderizarTopicos();
+
+}
+
+
+/* =====================================================
+   SALVAR CAMPO EXTRA
+===================================================== */
+
+function salvarCampoExtra(
+
+    topicoId,
+
+    itemId,
+
+    valor
+
+) {
+
+    const topico =
+
+        pastaAtual.topicos.find(
+
+            topico => topico.id === topicoId
+
+        );
+
+    if (!topico) return;
+
+    const item =
+
+        topico.itens.find(
+
+            item => item.id === itemId
+
+        );
+
+    if (!item) return;
+
+    item.valorCampo = valor;
+
+    salvarDados();
+
+}
+
+
+/* =====================================================
+   EDITAR
+===================================================== */
+
+function alternarEdicao() {
+
+    modoEdicao =
+
+        !modoEdicao;
+
+    document.body.classList.toggle(
+
+        "modo-edicao",
+
+        modoEdicao
+
+    );
+
+    document.getElementById(
+
+        "botao-editar"
+
+    ).textContent =
+
+        modoEdicao
+
+        ? "💾 Salvar alterações"
+
+        : "✏️ Editar";
+
+    renderizarTopicos();
+
+}
+
+
+function adicionarEventosTexto() {
+
+    document
+
+        .querySelectorAll(
+
+            ".texto-item"
+
+        )
+
+        .forEach(elemento => {
+
+            elemento.addEventListener(
+
+                "input",
+
+                function() {
+
+                    const item =
+
+                        encontrarItem(
+
+                            this.dataset.itemId
+
+                        );
+
+                    if (item) {
+
+                        item.texto =
+
+                            this.innerText.trim();
+
+                        salvarDados();
+
+                    }
+
+                }
+
+            );
+
+        });
+
+}
+
+
+function adicionarEventosTopico() {
+
+    document
+
+        .querySelectorAll(
+
+            ".topico-titulo"
+
+        )
+
+        .forEach(elemento => {
+
+            elemento.addEventListener(
+
+                "input",
+
+                function() {
+
+                    const topico =
+
+                        pastaAtual.topicos.find(
+
+                            topico =>
+
+                            topico.id ===
+
+                            this.dataset.topicoId
+
+                        );
+
+                    if (topico) {
+
+                        topico.nome =
+
+                            this.innerText.trim();
+
+                        salvarDados();
+
+                    }
+
+                }
+
+            );
+
+        });
+
+}
+
+
+function adicionarEventosCampos() {
+
+    document
+
+        .querySelectorAll(
+
+            ".valor-campo"
+
+        )
+
+        .forEach(campo => {
+
+            campo.addEventListener(
+
+                "input",
+
+                function() {
+
+                    salvarCampoExtra(
+
+                        this.dataset.topicoId,
+
+                        this.dataset.itemId,
+
+                        this.value
+
+                    );
+
+                }
+
+            );
+
+        });
+
+}
+
+
+function encontrarItem(id) {
+
+    for (
+
+        const topico
+
+        of pastaAtual.topicos
+
+    ) {
+
+        const item =
+
+            topico.itens.find(
+
+                item => item.id === id
+
+            );
+
+        if (item) return item;
+
+    }
+
+    return null;
+
+}
+
+
+/* =====================================================
+   PROGRESSO
+===================================================== */
+
+function calcularProgresso(pasta) {
+
+    let total = 0;
+
+    let concluidos = 0;
+
+    pasta.topicos.forEach(topico => {
+
+        topico.itens.forEach(item => {
+
+            if (
+
+                item.marcador !==
+
+                "nenhum"
+
+            ) {
+
+                total++;
+
+                if (
+
+                    item.concluido
+
+                ) {
+
+                    concluidos++;
+
+                }
+
+            }
+
+        });
+
+    });
+
+    if (total === 0) {
+
+        return 0;
+
+    }
+
+    return Math.round(
+
+        (
+
+            concluidos /
+
+            total
+
+        ) * 100
+
+    );
+
+}
+
+
+function atualizarProgresso() {
+
+    const progresso =
+
+        calcularProgresso(
+
+            pastaAtual
+
+        );
+
+    document.getElementById(
+
+        "barra-progresso"
+
+    ).style.width =
+
+        progresso + "%";
+
+    document.getElementById(
+
+        "texto-progresso"
+
+    ).textContent =
+
+        progresso +
+
+        "% concluído";
+
+}
+
+
+/* =====================================================
+   MODAL DE ITEM
+===================================================== */
+
+function prepararCampoExtra() {
+
+    const checkbox =
+
+        document.getElementById(
+
+            "input-tem-campo"
+
+        );
+
+    const configuracao =
+
+        document.getElementById(
+
+            "config-campo-extra"
+
+        );
+
+    configuracao.style.display =
+
+        checkbox.checked
+
+        ? "block"
+
+        : "none";
+
+}
+
+
+/* =====================================================
+   FECHAR MODAIS
+===================================================== */
+
+function fecharModais() {
+
+    document
+
+        .querySelectorAll(
+
+            ".modal-fundo"
+
+        )
+
+        .forEach(modal => {
+
+            modal.style.display =
+
+                "none";
+
+        });
+
+    document
+
+        .querySelectorAll(
+
+            ".modal input"
+
+        )
+
+        .forEach(input => {
+
+            if (
+
+                input.type !==
+
+                "checkbox"
+
+            ) {
+
+                input.value = "";
+
+            }
+
+        });
+
+    const checkbox =
+
+        document.getElementById(
+
+            "input-tem-campo"
+
+        );
+
+    if (checkbox) {
+
+        checkbox.checked = false;
+
+    }
+
+    const configuracao =
+
+        document.getElementById(
+
+            "config-campo-extra"
+
+        );
+
+    if (configuracao) {
+
+        configuracao.style.display =
+
+            "none";
+
+    }
+
+    window.topicoSelecionado =
+
+        null;
+
+}
+
+
+/* =====================================================
+   SEGURANÇA DE TEXTO
+===================================================== */
+
+function escaparHTML(texto) {
+
+    const div =
+
+        document.createElement(
+
+            "div"
+
+        );
+
+    div.textContent =
+
+        texto || "";
+
+    return div.innerHTML;
+
+}
+
+
+function escaparAtributo(texto) {
+
+    return String(
+
+        texto || ""
+
+    )
+
+    .replace(
+
+        /&/g,
+
+        "&amp;"
+
+    )
+
+    .replace(
+
+        /"/g,
+
+        "&quot;"
+
+    )
+
+    .replace(
+
+        /</g,
+
+        "&lt;"
+
+    )
+
+    .replace(
+
+        />/g,
+
+        "&gt;"
+
+    );
+
+}
+
+
+/* =====================================================
+   EVENTOS
+===================================================== */
+
+document
+
+    .getElementById(
+
+        "input-tem-campo"
+
+    )
+
+    .addEventListener(
+
+        "change",
+
+        prepararCampoExtra
+
+    );
+
+
+/* =====================================================
+   INICIALIZAÇÃO
+===================================================== */
+
+renderizarPastas();
+
+</script>
+
+</body>
+
+</html>
